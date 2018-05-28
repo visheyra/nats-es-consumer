@@ -15,11 +15,13 @@ import (
 	"time"
 )
 
+//Handler, struct for es forwarding
 type Handler struct {
 	url    string
 	esType string
 }
 
+//NewHandler creates a new handler
 func NewHandler(URL, esType string) (*Handler, error) {
 	_, err := url.Parse(URL)
 	if err != nil {
@@ -32,6 +34,7 @@ func NewHandler(URL, esType string) (*Handler, error) {
 	}, nil
 }
 
+//Handle, http handler
 func (h Handler) Handle(m *nats.Msg) {
 
 	logger, err := zap.NewProduction()
@@ -73,6 +76,7 @@ func (h Handler) Handle(m *nats.Msg) {
 	}
 }
 
+//TestEndpoint, test that the elastic search endpoint is reachable and sane
 func (h Handler) TestEndpoint() error {
 	r, err := http.Get(h.url)
 
@@ -107,9 +111,9 @@ func (h Handler) postAtIndexWithDate(data []byte, index string) error {
 	}
 
 	if r.StatusCode < 200 && r.StatusCode >= 300 {
-		defer r.Body.Close()
+		defer r.Body.Close() // nolint: errcheck
 		b, _ := ioutil.ReadAll(r.Body)
-		return errors.New(fmt.Sprintf("Can't post data to ES code: %d message: [%s]", r.StatusCode, string(b[:])))
+		return fmt.Errorf("Can't post data to ES code: %d message: [%s]", r.StatusCode, string(b[:])))
 	}
 
 	logger.Debug(

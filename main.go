@@ -22,14 +22,14 @@ func main() { // nolint: gocyclo
 	showTime := os.Getenv("MY_TIMESTAMP")
 	subj := os.Getenv("MY_TOPIC")
 	queue := os.Getenv("MY_QUEUE")
-	esUrl := os.Getenv("MY_ELASTICSEARCH_ENDPOINT")
+	esURL := os.Getenv("MY_ELASTICSEARCH_ENDPOINT")
 	esType := os.Getenv("MY_ELASTICSEARCH_TYPE")
 	//nc, err = nats.Connect("tls://localhost:4443", nats.RootCAs("./configs/certs/ca.pem"))
 
-	h, err := es.NewHandler(esUrl, esType)
+	h, err := es.NewHandler(esURL, esType)
 	if err != nil {
 		logger.Error("Error parsing ES url",
-			zap.String("url", esUrl),
+			zap.String("url", esURL),
 			zap.String("error", err.Error()),
 		)
 	}
@@ -37,7 +37,7 @@ func main() { // nolint: gocyclo
 	err = h.TestEndpoint()
 	if err != nil {
 		logger.Error("Endpoint is not healthy",
-			zap.String("url", esUrl),
+			zap.String("url", esURL),
 			zap.String("error", err.Error()),
 		)
 	}
