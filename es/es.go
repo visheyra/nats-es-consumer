@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-//Handler, struct for es forwarding
+//Handler struct for es forwarding
 type Handler struct {
 	url    string
 	esType string
@@ -34,7 +34,7 @@ func NewHandler(URL, esType string) (*Handler, error) {
 	}, nil
 }
 
-//Handle, http handler
+//Handle http handler
 func (h Handler) Handle(m *nats.Msg) {
 
 	logger, err := zap.NewProduction()
@@ -76,7 +76,7 @@ func (h Handler) Handle(m *nats.Msg) {
 	}
 }
 
-//TestEndpoint, test that the elastic search endpoint is reachable and sane
+//TestEndpoint test that the elastic search endpoint is reachable and sane
 func (h Handler) TestEndpoint() error {
 	r, err := http.Get(h.url)
 
