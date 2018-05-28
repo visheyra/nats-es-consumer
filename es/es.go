@@ -117,7 +117,7 @@ func (h Handler) postAtIndexWithDate(data []byte, index string) error {
 	}
 
 	logger.Debug(
-		"Suceeded sending sample",
+		"Succeeded sending sample",
 		zap.Int("length", len(data)),
 	)
 
