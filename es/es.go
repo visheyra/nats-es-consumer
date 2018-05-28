@@ -113,7 +113,7 @@ func (h Handler) postAtIndexWithDate(data []byte, index string) error {
 	if r.StatusCode < 200 && r.StatusCode >= 300 {
 		defer r.Body.Close() // nolint: errcheck
 		b, _ := ioutil.ReadAll(r.Body)
-		return fmt.Errorf("Can't post data to ES code: %d message: [%s]", r.StatusCode, string(b[:])))
+		return fmt.Errorf("Can't post data to ES code: %d message: [%s]", r.StatusCode, string(b[:]))
 	}
 
 	logger.Debug(
